@@ -1,14 +1,20 @@
-import { X, Trash2 } from "lucide-react";
+import {  Trash2 } from "lucide-react";
+import BotaoFecharModal from "./BotaoFecharModal";
 
-interface botaoProps {
+interface modalProps {
     onClick: () => void;
+    placa: string
+    modelo:string
+    atendente:string
+    tecnico: string,
+    data: string
 }
 
-export default function ModalDetalhesVeiculo({ onClick }: botaoProps) {
+export default function ModalDetalhesVeiculo({ onClick, placa, modelo, atendente, tecnico, data  }: modalProps) {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             {/* Overlay */}
-            <div className="absolute inset-0 bg-black/50"></div>
+            <div className="absolute inset-0 bg-black/70"></div>
 
             {/* Modal */}
             <div className="relative bg-white w-full max-w-3xl rounded-xl shadow-lg p-6 z-10 max-h-[90vh] overflow-y-auto">
@@ -17,12 +23,10 @@ export default function ModalDetalhesVeiculo({ onClick }: botaoProps) {
                     <h2 className="text-xl font-semibold">
                         Detalhes do Veículo
                     </h2>
-                    <button
-                        className="text-gray-500 bg-gray-200 w-10 h-10 flex justify-center items-center rounded-md shadow-md hover:text-gray-700 text-lg cursor-pointer"
-                        onClick={onClick}
-                    >
-                        <X size={28} />
-                    </button>
+
+
+                    <BotaoFecharModal onClick={onClick}/>
+                   
                 </div>
 
                 {/* Conteúdo */}
@@ -31,23 +35,28 @@ export default function ModalDetalhesVeiculo({ onClick }: botaoProps) {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
                             <span className="text-gray-500">Placa</span>
-                            <p className="font-medium">ABC-1234</p>
+                            <p className="font-medium">{placa}</p>
                         </div>
 
                         <div>
                             <span className="text-gray-500">Modelo</span>
-                            <p className="font-medium">Gol 1.0</p>
+                            <p className="font-medium">{modelo}</p>
                         </div>
 
                         <div>
-                            <span className="text-gray-500">Vendedor</span>
-                            <p className="font-medium">João Silva</p>
+                            <span className="text-gray-500">atendente</span>
+                            <p className="font-medium">{atendente}</p>
+                        </div>
+                        <div>
+                            <span className="text-gray-500">Técnico</span>
+                            <p className="font-medium">{tecnico}</p>
+                        </div>
+                        <div>
+                            <span className="text-gray-500">Data</span>
+                            <p className="font-medium">{data}</p>
                         </div>
 
-                        <div>
-                            <span className="text-gray-500">Ano</span>
-                            <p className="font-medium">2022</p>
-                        </div>
+                      
                     </div>
 
                     {/* Imagens */}

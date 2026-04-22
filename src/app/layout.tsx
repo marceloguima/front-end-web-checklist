@@ -31,7 +31,7 @@ export default function RootLayout({
             lang="en"
             className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
         >
-            <body className="min-h-full grid grid-cols-[260px_1fr] grid-rows-[90px_1fr] h-screen bg-gray-100 gap-8">
+            <body className="min-h-full grid grid-cols-[260px_1fr] grid-rows-[90px_1fr] h-screen bg-gray-100 gap-8 relative">
                 <SideBar/>
                 <Header/>
               {children}

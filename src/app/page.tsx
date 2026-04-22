@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
     Table,
@@ -6,12 +6,12 @@ import {
     TableHead,
     TableCell,
     TableRow,
-    
 } from "../components/Tabela";
 
 import { Eye, CheckLine } from "lucide-react";
 import { useState } from "react";
 import ModalDetalhesVeiculo from "@/src/components/ModalDetalhesVeiculo";
+import { GrupoAcoesTabela } from "../components/GrupoAcoesTabela";
 
 // Array com os dados falsos para testar o layout
 const mockVeiculos = [
@@ -89,12 +89,33 @@ const mockVeiculos = [
     },
 ];
 
-export default async function Home() {
-    
-         const [verDetalhes, setVerDetalhes] = useState(false); 
-    
+export default function Home() {
+    interface Veiculo {
+        id: number;
+        placa: string;
+        modelo: string;
+        atendente: string;
+        tecnico: string;
+        dataEntrada: string;
+    }
+
+    const [carroEmDestaque, setCarroEmDestaque] = useState<Veiculo | null>();
+    const [modalDetalhesAberto, setModalDetalhesAberto] = useState(false);
+    const abrirDetalhes = (id: number) => {
+        const carroEncontrado = mockVeiculos.find(
+            (veiculo) => veiculo.id === id,
+        );
+
+        setCarroEmDestaque(carroEncontrado);
+        setModalDetalhesAberto(true);
+    };
+
+    const darSaida = () => {
+        alert("Saída");
+    };
+
     return (
-        <main>
+        <main className="pr-1">
             <div className="flex justify-between pr-10 pl-10">
                 <div className="flex flex-col justify-center items-center gap-2 w-70 h-20 rounded-2xl border-2 border-sky-400 bg-sky-50">
                     <h3 className="text-xl font-bold text-sky-400">
@@ -120,9 +141,16 @@ export default async function Home() {
                 </div>
             </div>
             <div className="mt-8 shadow-md bg-white rounded-md border-2 border-gray-200 mr-3 overflow-auto">
-                {verDetalhes && (
-                <ModalDetalhesVeiculo onClick={() => setVerDetalhes(false)} />
-            )}
+                {modalDetalhesAberto && carroEmDestaque && (
+                    <ModalDetalhesVeiculo
+                        placa={carroEmDestaque.placa}
+                        modelo={carroEmDestaque.modelo}
+                        atendente={carroEmDestaque.atendente}
+                        tecnico={carroEmDestaque?.tecnico}
+                        data={carroEmDestaque?.dataEntrada}
+                        onClick={() => setModalDetalhesAberto(false)}
+                    />
+                )}
                 <Table titulo="Veículos no Pátio">
                     <TableHead>
                         <tr>
@@ -142,38 +170,26 @@ export default async function Home() {
                                 <TableCell>{veiculo.dataEntrada}</TableCell>
                                 <TableCell>{veiculo.atendente}</TableCell>
                                 <TableCell>{veiculo.tecnico}</TableCell>
-                                <TableCell>{ <div className="w-20 flex items-center justify-center gap-5">
-                                        <div className="relative group w-fit">
-                                            <div
-                                                className="absolute rigth-full right-10 ml-2 top-1/2 -translate-y-1/2 
-                                            bg-sky-600 text-white text-sm px-2 py-1 rounded 
-                                            hidden group-hover:block transition whitespace-nowrap"
-                                            >
-                                                <span>Visualizar</span>
-                                            </div>
-                                            <button
-                                                className="text-sky-600 hover:text-sky-800 cursor-pointer"
-                                                onClick={() =>
-                                                    setVerDetalhes(true)
-                                                }
-                                            >
-                                                <Eye className="w-5 h-5" />
-                                            </button>
-                                        </div>
-
-                                        <div className="relative group w-fit">
-                                            <div
-                                                className="absolute rigth-full left-10 ml-2 top-1/2 -translate-y-1/2 
-                                            bg-sky-600 text-white text-sm px-2 py-1 rounded 
-                                            hidden group-hover:block transition whitespace-nowrap"
-                                            >
-                                                <span>Finalizar</span>
-                                            </div>
-                                            <button className="text-green-600 cursor-pointer">
-                                                <CheckLine />
-                                            </button>
-                                        </div>
-                                    </div>}</TableCell>
+                                <TableCell>
+                                    {
+                                        <GrupoAcoesTabela
+                                            icon1={<Eye className="w-5 h-5" />}
+                                            textoHover1="Visualizar"
+                                            onClick1={() =>
+                                                abrirDetalhes(veiculo.id)
+                                            }
+                                            corHover1="hover:text-sky-600" // Fica azul no hover
+                                            corIcon1="text-sky-700"
+                                            icon2={
+                                                <CheckLine className="w-5 h-5" />
+                                            }
+                                            textoHover2="Finalizar"
+                                            onClick2={() => darSaida()}
+                                            corHover2="hover:text-green-600" // Fica verde no hover
+                                            corIcon2="text-green-700"
+                                        />
+                                    }
+                                </TableCell>
                             </TableRow>
                         ))}
                     </tbody>
