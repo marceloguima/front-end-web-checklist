@@ -6,7 +6,7 @@ import Input from "@/src/components/Input";
 import Botao from "@/src/components/Botao";
 import BotaoFecharModal from "@/src/components/BotaoFecharModal";
 import { GrupoAcoesTabela } from "@/src/components/GrupoAcoesTabela";
-import { Settings, Trash2, Plus } from "lucide-react";
+import { Settings, Trash2, Plus, KeyRound } from "lucide-react";
 
 import {
     Table,
@@ -17,8 +17,15 @@ import {
 } from "@/src/components/Tabela";
 import Cadastro from "../Cadastro/page";
 import { ModalAcoes } from "@/src/components/ModalAcoes";
+import { DropdownPerfil } from "@/src/components/Dropdownperfil";
 
-const mockEquipe = [
+interface Membro {
+    id: number;
+    nome: string;
+    email: string;
+    funcao: string;
+}
+const mockEquipe: Membro[] = [
     {
         id: 1,
         nome: "Marcelo Oliveira",
@@ -84,68 +91,72 @@ const mockEquipe = [
 export default function Equipe() {
     const [mostraFormCadastraMembro, setMostraFormCadastraMembro] =
         useState(false);
+
+    const [abreDropdown, setAbreDropdown] = useState(false);
     const [abreModalApagaMembro, setAbreModalApagaMembro] = useState(false);
+    const [idSelecionado, setIdSelecionado] = useState<number | null>(null);
 
-    const abrirConfiguracoes = () => {
-        alert("configurar");
+    const abrirDropdouwConfiguracoes = (idMembro: number) => {
+        setAbreDropdown(true);
+        setIdSelecionado(idMembro);
     };
 
-    const deletarMembro = () => {
-        setAbreModalApagaMembro(true);
-    };
+    const membroSelecionado = mockEquipe.find(
+        (membro) => membro.id === idSelecionado,
+    );
 
     const confirmaExclusao = () => {
         alert("Membro apagado");
         setAbreModalApagaMembro(false);
     };
 
-    const cadastrar = () => {};
+    const gerarAcesso = () => {
+        alert("Gerando acesso, aguarde...");
+    };
+
+    console.log("1. ID na memória:", idSelecionado);
+    console.log("2. Membro encontrado pelo React:", membroSelecionado);
 
     return (
         <main className="pr-1">
+            {abreDropdown && membroSelecionado && (
+                <DropdownPerfil
+                    onClickFechar={() => setAbreDropdown(false)}
+                    nome={membroSelecionado.nome}
+                    email={membroSelecionado.email}
+                    labelBotao1="Gerar novo acesso"
+                    iconeBotao1={<KeyRound />}
+                    onClickBotão1={() => gerarAcesso()}
+                    iconeBotao2={<Trash2 />}
+                    labelBotao2="Excluir membro"
+                    onClickBotão2={() => setAbreModalApagaMembro(true)}
+                />
+            )}
+
             {abreModalApagaMembro && (
                 <>
-                    <div className="absolute z-5 inset-0 bg-black/70"></div>
-                    <ModalAcoes classVariant="top-80 right-70" texto="Tem certeza que quer apagar o João do seu sistema? Ele perderá todo acesso ao aplicativo.">
-                        <Botao classVariant="bg-gray-400" onClick={() => setAbreModalApagaMembro(false)}>
+                    {/* modal para confirmação de exclusão de membro */}
+                    <div
+                        className="absolute z-5 inset-0 bg-black/70"
+                        onClick={() => setAbreModalApagaMembro(false)}
+                    ></div>
+                    <ModalAcoes
+                        classVariant="top-80 right-70"
+                        texto={`Tem certeza que quer apagar o(a) ${membroSelecionado?.nome || "este membro"} do seu sistema? Ele(a) perderá todo acesso ao aplicativo.`}
+                    >
+                        <Botao
+                            classVariant="bg-gray-400"
+                            onClick={() => setAbreModalApagaMembro(false)}
+                        >
                             Cancelar
                         </Botao>
-                        <Botao classVariant="bg-red-500" onClick={() => confirmaExclusao()}>
+                        <Botao
+                            classVariant="bg-red-500"
+                            onClick={() => confirmaExclusao()}
+                        >
                             Sim, apagar
                         </Botao>
                     </ModalAcoes>
-                </>
-            )}
-
-            {mostraFormCadastraMembro && (
-                <>
-                    <div className="absolute z-5 inset-0 bg-black/70"></div>
-
-                    <form className="w-100 absolute z-6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z10 h-120 p-10 flex flex-col items-center gap-4 bg-white border-2 border-gray-200 rounded-md shadow-2xl">
-                        <BotaoFecharModal
-                            onClick={() => setMostraFormCadastraMembro(false)}
-                            classVariant="absolute top-4 right-4"
-                        />
-                        <h3 className="text-xl">Prencha os dados</h3>
-                        <Input
-                            label="Nome:"
-                            placeholder="Digite seu primeiro nome"
-                            type="text"
-                        />
-                        <Input
-                            label="Email:"
-                            placeholder="Digite seu melhor email"
-                            type="email"
-                        />
-                        <Input
-                            label="Senha:"
-                            placeholder="Crie uma senha"
-                            type="password"
-                        />
-                        <Botao classVariant="w-full mt-10" onClick={cadastrar}>
-                            Cadastrar
-                        </Botao>
-                    </form>
                 </>
             )}
 
@@ -177,6 +188,7 @@ export default function Equipe() {
                     Cadastrar um membro
                 </Botao>
             </div>
+
             <div className="mt-8 shadow-md bg-white rounded-md border-2 border-gray-200 mr-3 overflow-auto">
                 <Table titulo="Minha equipe">
                     <TableHead>
@@ -197,14 +209,13 @@ export default function Equipe() {
                                     <GrupoAcoesTabela
                                         icon1={<Settings className="w-5 h-5" />}
                                         textoHover1="Configurar"
-                                        onClick1={() => abrirConfiguracoes()}
+                                        onClick1={() =>
+                                            abrirDropdouwConfiguracoes(
+                                                equipe.id,
+                                            )
+                                        }
                                         corHover1="hover:text-sky-600"
                                         corIcon1="text-sky-700"
-                                        icon2={<Trash2 className="w-5 h-5" />}
-                                        textoHover2="Excluir Membro"
-                                        onClick2={() => deletarMembro()}
-                                        corHover2="hover:text-red-600"
-                                        corIcon2="text-red-500"
                                     />
                                 </TableCell>
                             </TableRow>

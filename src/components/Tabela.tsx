@@ -42,7 +42,7 @@ export function TableHeader({ children }: TableProps) {
 
 export function TableRow({ children }: TableProps) {
     return (
-        <tr className="border-b border-sky-100 hover:bg-sky-50 transition">
+        <tr className="border-b border-sky-100 hover:bg-sky-50 transition relative">
             {children}
         </tr>
     );
