@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 interface botaoProps {
     children: ReactNode;
-    onClick: () => void;
+    onClick?: () => void;
     classVariant?: string;
 }
 
