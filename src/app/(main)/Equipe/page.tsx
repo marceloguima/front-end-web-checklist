@@ -15,7 +15,7 @@ import {
     TableCell,
     TableRow,
 } from "@/src/components/Tabela";
-import Cadastro from "../Cadastro/page";
+import Cadastro from "../../(auth)/Cadastro/page";
 import { ModalAcoes } from "@/src/components/ModalAcoes";
 import { DropdownPerfil } from "@/src/components/Dropdownperfil";
 

@@ -6,12 +6,12 @@ import {
     TableHead,
     TableCell,
     TableRow,
-} from "../components/Tabela";
+} from "@/src/components/Tabela";
 
 import { Eye, CheckLine } from "lucide-react";
 import { useState } from "react";
 import ModalDetalhesVeiculo from "@/src/components/ModalDetalhesVeiculo";
-import { GrupoAcoesTabela } from "../components/GrupoAcoesTabela";
+import { GrupoAcoesTabela } from "@/src/components/GrupoAcoesTabela";
 
 // Array com os dados falsos para testar o layout
 const mockVeiculos = [

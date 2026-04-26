@@ -6,12 +6,12 @@ export default function SideBar() {
         <aside className="bg-sky-700 row-span-2 shadow-md flex flex-col h-full">
             <header className="flex flex-col justify-center items-center border-b-2  border-gray-400 h-30 text-white">
                 <h1>Logo</h1>
-                <span>MENU PRINCIPAl</span>
+                <span>MENU PRINCIPAL</span>
             </header>
             <nav className="flex-1">
                 <ul className="flex flex-col gap-5 p-5 mt-5 w-full">
                     <li className="w-full h-10">
-                        <BtnLinkNavgation className="" href="/">
+                        <BtnLinkNavgation className="" href="/PainelPrincipal">
                             <LayoutPanelLeft /> Painel
                         </BtnLinkNavgation>
                     </li>
