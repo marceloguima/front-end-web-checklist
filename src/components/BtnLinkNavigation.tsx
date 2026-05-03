@@ -19,6 +19,6 @@ export default function BtnLinkNavgation({children, href, className} : NavLinkPr
     const isActive = pathame === href
     
     return(
-        <Link href={href} className={twMerge(clsx("flex items-center gap-3 hover:bg-sky-800  w-full h-full rounded-md text-white pl-3 ", className, isActive ? "bg-sky-600 shadow-xl hover:bg-sky-600"  : "bg-transparent"))}>{children}</Link>
+        <Link href={href} className={twMerge(clsx("flex items-center gap-3 hover:bg-sky-800  w-full h-full rounded-md text-white pl-3", className, isActive ? "bg-sky-600 shadow-xl hover:bg-sky-600"  : "bg-transparent"))}>{children}</Link>
     )
 }

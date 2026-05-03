@@ -7,11 +7,11 @@ interface DropdownPerfilProp {
     nome: string;
     email: string;
     labelBotao1: string;
-    iconeBotao1:ReactNode
-    onClickBotão1: ()=> void
+    iconeBotao1: ReactNode;
+    onClickBotão1: () => void;
     labelBotao2: string;
-    iconeBotao2:ReactNode
-    onClickBotão2: ()=> void
+    iconeBotao2: ReactNode;
+    onClickBotão2: () => void;
     children?: ReactNode;
     classVariant?: string;
 }
@@ -27,16 +27,16 @@ export function DropdownPerfil({
     onClickBotão1,
     labelBotao2,
     iconeBotao2,
-    onClickBotão2
+    onClickBotão2,
 }: DropdownPerfilProp) {
     const posicaoPadrao = "top-80 left-280";
 
     const posicao = classVariant || posicaoPadrao;
 
     return (
-        <div className="absolute z-8 inset-0 " onClick={onClickFechar}>
+        <div className="fixed z-9 inset-0" onClick={onClickFechar}>
             <div
-                className={`absolute z-10  w-70 p-5 bg-white border-2 border-gray-300 rounded-md shadow-xl ${posicao}`}
+                className={`absolute z-10 w-70 p-5 bg-white border-2 border-gray-300 rounded-md shadow-xl ${posicao}`}
             >
                 {children}
                 <div className="flex flex-col items-center">

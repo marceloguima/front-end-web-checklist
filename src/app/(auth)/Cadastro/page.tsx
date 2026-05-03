@@ -7,6 +7,8 @@ import Input from "@/src/components/Input";
 import { useState } from "react";
 import { FormEvent } from "react";
 
+import axios from "axios";
+
 export default function Cadastro() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
@@ -20,22 +22,42 @@ export default function Cadastro() {
     const [temErroEmail, setTemErroEmail] = useState(false);
     const [temErroSenha, setTemErroSenha] = useState(false);
 
-    console.log(nome);
-    console.log(email);
-    console.log(senha);
+    // console.log(nome);
+    // console.log(email);
+    // console.log(senha);
 
-    const cadastrar: React.FormEventHandler<HTMLFormElement> = (e) => {
+    // const cadastrar async (e:React.FormEventHandler<HTMLFormElement>) => {
+
+    // }
+
+    const cadastrar: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
 
         const nomeValido = validaNome();
         const emailValido = validaEmail();
         const senhaValida = validaSenha();
 
-
         // Só envia se passar em todas as validações
         if (nomeValido && emailValido && senhaValida) {
             alert("Formulário pronto pra enviar");
-            
+
+            const novoUsuario = {
+                nome,
+                email,
+                senha,
+            };
+            console.log("Novo usuario", { novoUsuario });
+            console.log(`Teste ${nome}`);
+
+            const urlDaApi = process.env.NEXT_PUBLIC_API_URL;
+            try {
+                const resposta = await axios.post(
+                    `${urlDaApi}/usuarios/cadastro`,
+                    novoUsuario,
+                );
+            } catch (error) {
+                
+            }
         }
 
         setTimeout(() => {

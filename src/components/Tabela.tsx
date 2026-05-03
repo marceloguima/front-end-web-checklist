@@ -26,7 +26,7 @@ export function Table({ children, titulo }: TableProps) {
 }
 export function TableHead({ children }: TableProps) {
     return (
-        <thead className="sticky top-0 bg-white z-1 border-b border-sky-300">
+        <thead className="sticky top-0 bg-gray-100 z-1 border-b border-sky-300">
             {children}
         </thead>
     );

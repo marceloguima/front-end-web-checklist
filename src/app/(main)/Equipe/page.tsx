@@ -18,6 +18,7 @@ import {
 import Cadastro from "../../(auth)/Cadastro/page";
 import { ModalAcoes } from "@/src/components/ModalAcoes";
 import { DropdownPerfil } from "@/src/components/Dropdownperfil";
+import CardTop from "@/src/components/CardsTop";
 
 interface Membro {
     id: number;
@@ -160,33 +161,19 @@ export default function Equipe() {
                 </>
             )}
 
-            <div className="flex justify-between items-end pr-10 pl-10">
-                <div className="flex flex-col justify-center items-center gap-2 w-70 h-20 rounded-2xl border-2 border-sky-400 bg-sky-50">
-                    <h3 className="text-xl font-bold text-sky-400">
-                        Entradas de hoje
-                    </h3>
-                    <span className="text-3xl font-bold text-sky-700">04</span>
-                </div>
+            <div className="w-full flex justify-between items-end p-5 ">
+               
+                <CardTop color1="text-sky-400" color2="text-sky-700" background="bg-sky-50" borderColor="border-sky-400" texto="Entradas de hoje" valor="04"/>
+                <CardTop color1="text-red-400" color2="text-red-400" background="bg-red-50" borderColor="border-red-300" texto="Total em pátio" valor="06"/>
+                <CardTop color1="text-green-500" color2="text-green-700" background="bg-green-50" borderColor="border-green-500" texto="Finalizados hoje" valor="10"/>
 
-                <div className="flex flex-col justify-center items-center gap-2 w-70 h-20 rounded-2xl border-2 border-red-300 bg-red-50">
-                    <h3 className="text-xl font-bold text-red-400">
-                        Total no pátio
-                    </h3>
-                    <span className="text-3xl font-bold text-red-400">10</span>
+        
+                <div className=" max-[222px]">
+                    <Botao onClick={() => setMostraFormCadastraMembro(true)}>
+                        <Plus />
+                        Cadastrar um membro
+                    </Botao>
                 </div>
-
-                <div className="flex flex-col justify-center items-center gap-2 w-70 h-20 rounded-2xl border-2 border-green-500 bg-green-50">
-                    <h3 className="text-xl font-bold text-green-500">
-                        Finalizados hoje
-                    </h3>
-                    <span className="text-3xl font-bold text-green-700">
-                        08
-                    </span>
-                </div>
-                <Botao onClick={() => setMostraFormCadastraMembro(true)}>
-                    <Plus />
-                    Cadastrar um membro
-                </Botao>
             </div>
 
             <div className="mt-8 shadow-md bg-white rounded-md border-2 border-gray-200 mr-3 overflow-auto">
